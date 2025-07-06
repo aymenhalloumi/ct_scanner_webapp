@@ -1,0 +1,49 @@
+{% extends 'appbuilder/baselayout.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-hospital"></i> CT Scanner Preinstallation Manager
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="well">
+                                <h4><i class="fa fa-folder"></i> Projects</h4>
+                                <p>Manage CT scanner installation projects and track their progress.</p>
+                                <a href="{{ url_for('ProjectView.projects') }}" class="btn btn-primary">
+                                    <i class="fa fa-arrow-right"></i> View Projects
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="well">
+                                <h4><i class="fa fa-building"></i> Site Specifications</h4>
+                                <p>Create and manage site specifications for CT scanner installations.</p>
+                                <a href="{{ url_for('SiteSpecificationView.site_specs') }}" class="btn btn-success">
+                                    <i class="fa fa-arrow-right"></i> Site Specs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h4><i class="fa fa-info-circle"></i> Welcome to CT Scanner Preinstallation Manager</h4>
+                                <p>This application helps you manage CT scanner preinstallation requirements, 
+                                site specifications, and compliance documentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
