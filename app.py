@@ -10,6 +10,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Configuration with your real keys
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24).hex())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ct_install.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['APP_NAME'] = 'CT Scanner Preinstallation Manager'
@@ -582,7 +583,7 @@ with app.app_context():
 if __name__ == '__main__':
     print("🚀 Starting Enhanced CT Scanner Preinstallation Manager...")
     print("🌐 Main page: http://localhost:5000")
-    print("🔧 Admin dashboard: http://localhost:5000/admin/") 
+    print("🔧 Admin dashboard: http://localhost:5000/admin/")
     print("🧪 System test: http://localhost:5000/test")
     print("📊 Sample data: http://localhost:5000/create-sample-data")
     print("🔍 Debug routes: http://localhost:5000/debug-routes")
@@ -593,4 +594,7 @@ if __name__ == '__main__':
     print("   • NeuViz ACE/ACE SP support")
     print("   • OpenAI API configured")
     print("   • Ready for Step 3: AI Integration")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug = os.environ.get('FLASK_DEBUG', '0') == '1'
+    host = os.environ.get('FLASK_RUN_HOST', '127.0.0.1')
+    port = int(os.environ.get('FLASK_RUN_PORT', '5000'))
+    app.run(debug=debug, host=host, port=port)
