@@ -560,17 +560,20 @@ def create_sample_data_route():
 @app.route('/debug-routes')
 def debug_routes():
     """Show all available routes"""
-    output = ["<h2>🔍 Available Routes</h2>"]
-    output.append("<div style='font-family: monospace; font-size: 12px;'>")
-    
+    header = "<h2>🔍 Available Routes</h2>"
+    begin_div = "<div style='font-family: monospace; font-size: 12px;'>"
+    end_div = "</div>"
+    footer = "<p><a href='/admin/'>Back to Admin</a></p>"
+
+    route_lines = []
     for rule in app.url_map.iter_rules():
         methods = ','.join(rule.methods - {'HEAD', 'OPTIONS'})
-        output.append(f"<strong>{rule.endpoint}</strong>: {rule.rule} [{methods}]<br>")
-    
-    output.append("</div>")
-    output.append("<p><a href='/admin/'>Back to Admin</a></p>")
-    
-    return "".join(sorted(output))
+        route_lines.append(f"<strong>{rule.endpoint}</strong>: {rule.rule} [{methods}]<br>")
+
+    # Sort just the route lines for readability
+    route_lines.sort()
+
+    return "".join([header, begin_div, *route_lines, end_div, footer])
 
 # ================================================
 # INITIALIZE DATABASE
