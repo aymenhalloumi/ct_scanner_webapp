@@ -5,12 +5,13 @@
 
 from flask import Flask
 from flask_appbuilder import AppBuilder, SQLA
+import os
 
 # Create Flask app
 app = Flask(__name__)
 
 # Minimal configuration
-app.config['SECRET_KEY'] = '062c2fae05e99855de618b4df4dd15cd7ee662312e2d725ac11928c2f0377adc'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24).hex())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///minimal_test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -66,4 +67,7 @@ if __name__ == '__main__':
     print("🌐 Visit: http://localhost:5000")
     print("🔧 Admin: http://localhost:5000/admin/")
     print("🔍 Routes: http://localhost:5000/debug-routes")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug = os.environ.get('FLASK_DEBUG', '0') == '1'
+    host = os.environ.get('FLASK_RUN_HOST', '127.0.0.1')
+    port = int(os.environ.get('FLASK_RUN_PORT', '5000'))
+    app.run(debug=debug, host=host, port=port)

@@ -14,7 +14,7 @@ import os
 app = Flask(__name__)
 
 # Configuration
-app.config['SECRET_KEY'] = '062c2fae05e99855de618b4df4dd15cd7ee662312e2d725ac11928c2f0377adc'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24).hex())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ct_scanner_simple.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -405,4 +405,7 @@ if __name__ == '__main__':
     print("📊 Load sample data: http://localhost:5000/create-sample-data")
     print("🧪 System test: http://localhost:5000/test")
     print("🔍 Debug routes: http://localhost:5000/debug-routes")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug = os.environ.get('FLASK_DEBUG', '0') == '1'
+    host = os.environ.get('FLASK_RUN_HOST', '127.0.0.1')
+    port = int(os.environ.get('FLASK_RUN_PORT', '5000'))
+    app.run(debug=debug, host=host, port=port)
